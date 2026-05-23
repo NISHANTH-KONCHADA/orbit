@@ -16,10 +16,13 @@ const app = express();
 const httpServer = http.createServer(app);
 
 // ── Socket.io ────────────────────────────────────────────────────────────────
-// Allow any localhost port (handles 5173, 5174, etc.)
+// Allow localhost (dev) + production CLIENT_URL (Vercel)
+const PROD_ORIGIN = process.env.CLIENT_URL || '';
 const allowedOrigin = (origin, callback) => {
-  if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) return callback(null, true);
-  callback(new Error('Not allowed by CORS'));
+  if (!origin) return callback(null, true); // server-to-server / curl
+  if (/^http:\/\/localhost:\d+$/.test(origin)) return callback(null, true); // local dev
+  if (PROD_ORIGIN && origin === PROD_ORIGIN) return callback(null, true); // Vercel
+  callback(new Error(`CORS: origin ${origin} not allowed`));
 };
 
 const io = new Server(httpServer, {
