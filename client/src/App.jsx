@@ -6,6 +6,7 @@ import { ProjectProvider } from './context/ProjectContext';
 import AppLayout from './components/layout/AppLayout';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import Board from './pages/Board';
 import Issues from './pages/Issues';
@@ -49,13 +50,15 @@ function App() {
           />
 
           <Routes>
-            {/* Public */}
+            {/* Landing */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Public auth */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
             {/* Protected app layout */}
             <Route element={<AppLayout />}>
-              <Route index element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/board" element={<Board />} />
               <Route path="/issues" element={<Issues />} />
@@ -63,7 +66,7 @@ function App() {
             </Route>
 
             {/* Fallback */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </ProjectProvider>
       </AuthProvider>

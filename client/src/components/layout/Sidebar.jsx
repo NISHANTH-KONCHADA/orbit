@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Kanban, ListTodo, Settings, LogOut,
-  Plus, ChevronDown, ChevronRight, Loader2, FolderOpen
+  Plus, ChevronDown, ChevronRight, Loader2, FolderOpen, Folder
 } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
@@ -101,7 +101,12 @@ const Sidebar = ({ collapsed = false }) => {
                             }
                           `}
                         >
-                          <span className="text-base shrink-0">{project.icon || '📁'}</span>
+                          <span className="shrink-0 flex items-center justify-center w-5 h-5">
+                            {project.icon
+                              ? <span className="text-base leading-none">{project.icon}</span>
+                              : <Folder size={15} className="text-gray-400" />
+                            }
+                          </span>
                           <span className="truncate">{project.name}</span>
                           <span className="ml-auto text-[10px] font-mono text-gray-400">{project.key}</span>
                         </button>

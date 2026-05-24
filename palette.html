@@ -1,0 +1,57 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { padding: 1rem 0; display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; gap: 10px; }
+.swatch { flex: 1; border-radius: 12px; overflow: hidden; }
+.color { height: 80px; }
+.info { padding: 10px 12px; background: var(--color-background-secondary); border: 1px solid var(--color-border-tertiary); border-top: none; border-radius: 0 0 12px 12px; }
+.name { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.hex { font-size: 11px; color: var(--color-text-tertiary); font-family: var(--font-mono); margin-top: 2px; }
+.use { font-size: 11px; color: var(--color-text-secondary); margin-top: 3px; }
+</style>
+
+<div class="wrap">
+  <div class="row">
+    <div class="swatch">
+      <div class="color" style="background:#F97316"></div>
+      <div class="info"><div class="name">Orange</div><div class="hex">#F97316</div><div class="use">Primary, buttons, accents</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#FFEDD5"></div>
+      <div class="info"><div class="name">Orange tint</div><div class="hex">#FFEDD5</div><div class="use">Hover bg, badges, highlights</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#ea6d10"></div>
+      <div class="info"><div class="name">Orange dark</div><div class="hex">#EA6D10</div><div class="use">Hover state, pressed</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="swatch">
+      <div class="color" style="background:#FFFFFF; border: 1px solid #e5e7eb; border-bottom: none;"></div>
+      <div class="info"><div class="name">White</div><div class="hex">#FFFFFF</div><div class="use">Page background</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#F9FAFB"></div>
+      <div class="info"><div class="name">Off white</div><div class="hex">#F9FAFB</div><div class="use">Card, sidebar bg</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#F3F4F6"></div>
+      <div class="info"><div class="name">Light gray</div><div class="hex">#F3F4F6</div><div class="use">Input bg, dividers</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="swatch">
+      <div class="color" style="background:#6B7280"></div>
+      <div class="info"><div class="name">Muted</div><div class="hex">#6B7280</div><div class="use">Subtext, placeholders</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#111827"></div>
+      <div class="info"><div class="name">Near black</div><div class="hex">#111827</div><div class="use">Headings, body text</div></div>
+    </div>
+    <div class="swatch">
+      <div class="color" style="background:#E5E7EB"></div>
+      <div class="info"><div class="name">Border</div><div class="hex">#E5E7EB</div><div class="use">Card borders, dividers</div></div>
+    </div>
+  </div>
+</div>

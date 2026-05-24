@@ -1,0 +1,374 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.guide { max-width: 100%; padding: 1rem 0; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.tab { padding: 7px 16px; border-radius: 20px; border: 1px solid var(--color-border-secondary); background: var(--color-background-secondary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; transition: all .2s; white-space: nowrap; }
+.tab.active { background: var(--color-background-info); color: var(--color-text-info); border-color: var(--color-border-info); font-weight: 500; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section { margin-bottom: 1.5rem; }
+.section-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 8px; }
+.section-title i { font-size: 16px; color: var(--color-text-info); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+.card { background: var(--color-background-secondary); border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px; }
+.card-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.card-sub { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 500; margin-top: 6px; }
+.badge.free { background: var(--color-background-success); color: var(--color-text-success); }
+.badge.warn { background: var(--color-background-warning); color: var(--color-text-warning); }
+
+.code-block { background: var(--color-background-tertiary); border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 14px; font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); line-height: 1.7; overflow-x: auto; white-space: pre; margin-top: 8px; }
+
+.step { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--color-border-tertiary); }
+.step:last-child { border-bottom: none; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); font-size: 12px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-content { flex: 1; }
+.step-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+.step-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+
+.ai-feature { background: var(--color-background-secondary); border: 1px solid var(--color-border-tertiary); border-left: 3px solid var(--color-border-info); border-radius: var(--border-radius-md); padding: 12px; margin-bottom: 10px; }
+.ai-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.ai-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.ai-prompt { font-family: var(--font-mono); font-size: 11px; color: var(--color-text-tertiary); background: var(--color-background-tertiary); border-radius: 6px; padding: 8px; margin-top: 8px; line-height: 1.6; }
+
+.highlight { background: var(--color-background-warning); color: var(--color-text-warning); border-radius: 6px; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; display: flex; gap: 8px; align-items: flex-start; }
+.highlight i { flex-shrink: 0; margin-top: 1px; }
+
+.folder { font-family: var(--font-mono); font-size: 12px; color: var(--color-text-secondary); line-height: 1.8; }
+.folder .dir { color: var(--color-text-info); font-weight: 500; }
+.folder .file { color: var(--color-text-secondary); }
+.folder .comment { color: var(--color-text-tertiary); }
+
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 4px; bottom: 4px; width: 1px; background: var(--color-border-secondary); }
+.tl-item { position: relative; margin-bottom: 14px; }
+.tl-dot { position: absolute; left: -17px; top: 4px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-text-info); }
+.tl-title { font-size: 13px; font-weight: 500; color: var(--color-text-primary); }
+.tl-time { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 3px; }
+.tl-desc { font-size: 12px; color: var(--color-text-secondary); }
+</style>
+
+<div class="guide">
+<div class="tabs">
+  <div class="tab active" onclick="show('deploy')"><i class="ti ti-rocket" aria-hidden="true"></i> Deployment</div>
+  <div class="tab" onclick="show('ai')"><i class="ti ti-brain" aria-hidden="true"></i> Free AI</div>
+  <div class="tab" onclick="show('structure')"><i class="ti ti-folder" aria-hidden="true"></i> Structure</div>
+  <div class="tab" onclick="show('prompts')"><i class="ti ti-message" aria-hidden="true"></i> AI Prompts</div>
+  <div class="tab" onclick="show('timeline')"><i class="ti ti-clock" aria-hidden="true"></i> Timeline</div>
+</div>
+
+<!-- DEPLOY -->
+<div class="panel active" id="panel-deploy">
+  <div class="highlight"><i class="ti ti-alert-triangle" aria-hidden="true"></i> All 100% free — no credit card needed for any of these.</div>
+  
+  <div class="section">
+    <div class="section-title"><i class="ti ti-database" aria-hidden="true"></i> Database — MongoDB Atlas</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">MongoDB Atlas Free Tier</div>
+        <div class="card-sub">512MB storage, shared cluster. More than enough for this project. Sign up at mongodb.com/atlas</div>
+        <span class="badge free">Free forever</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Setup steps</div>
+        <div class="card-sub">1. Create account → New Project → Free cluster<br>2. Add DB user<br>3. Whitelist 0.0.0.0/0<br>4. Copy connection string</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-server" aria-hidden="true"></i> Backend — Render</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">Render.com</div>
+        <div class="card-sub">Free Node.js web service. Connect GitHub repo, auto-deploys on push. render.com</div>
+        <span class="badge free">Free tier</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Env vars on Render</div>
+        <div class="card-sub">Dashboard → Environment → add MONGO_URI, JWT_SECRET, GEMINI_API_KEY</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Build command</div>
+        <div class="code-block">npm install
+node server.js</div>
+      </div>
+    </div>
+    <div style="margin-top:8px;font-size:12px;color:var(--color-text-tertiary)"><i class="ti ti-info-circle" aria-hidden="true"></i> Note: free tier spins down after 15 min idle. Add a UptimeRobot ping to keep it awake.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-brand-vercel" aria-hidden="true"></i> Frontend — Vercel</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">Vercel (best for React)</div>
+        <div class="card-sub">Connect GitHub, auto-deploys on push. Fast CDN. vercel.com</div>
+        <span class="badge free">Free forever</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Set env var</div>
+        <div class="code-block">VITE_API_URL=https://your-app.onrender.com</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-brand-github" aria-hidden="true"></i> Repo structure for judges</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">README.md must have</div>
+        <div class="card-sub">• Live demo URL<br>• Screenshots / GIF<br>• .env.example file<br>• Step-by-step setup<br>• Test login credentials</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Commit strategy</div>
+        <div class="card-sub">feat: add kanban board<br>feat: jwt auth system<br>feat: gemini ai assistant<br>fix: drag drop on mobile<br>deploy: live on render</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI -->
+<div class="panel" id="panel-ai">
+  <div class="highlight"><i class="ti ti-sparkles" aria-hidden="true"></i> Best free AI: Google Gemini 1.5 Flash — 1 million tokens context, 15 req/min free, no credit card.</div>
+  
+  <div class="section">
+    <div class="section-title"><i class="ti ti-key" aria-hidden="true"></i> Get your free API key</div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-title">Gemini (Recommended)</div>
+        <div class="card-sub">aistudio.google.com → Get API key. Use model: gemini-1.5-flash</div>
+        <span class="badge free">15 rpm free</span>
+      </div>
+      <div class="card">
+        <div class="card-title">Groq (backup)</div>
+        <div class="card-sub">console.groq.com → Free API key. Ultra-fast llama3 inference. groq.com</div>
+        <span class="badge free">30 rpm free</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-code" aria-hidden="true"></i> Backend AI route (Node.js)</div>
+    <div class="code-block">// routes/ai.js
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+router.post('/ai/assist', protect, async (req, res) => {
+  const { prompt, context } = req.body;
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+  
+  const result = await model.generateContent(
+    `You are a project management assistant. Context: ${context}\n\nUser: ${prompt}`
+  );
+  res.json({ reply: result.response.text() });
+});</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-brain" aria-hidden="true"></i> AI features to add (all impress judges)</div>
+    <div class="ai-feature">
+      <div class="ai-title">🤖 AI Task Description Generator</div>
+      <div class="ai-desc">User types a task title → AI auto-fills description, acceptance criteria, and suggested priority</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-title">📊 AI Sprint Summary</div>
+      <div class="ai-desc">One click → AI analyzes all tasks and generates a sprint progress report with blockers identified</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-title">💬 AI Project Assistant Chatbot</div>
+      <div class="ai-desc">Floating chat bubble — ask "What tasks are overdue?" or "Summarize this sprint" — AI knows your project context</div>
+    </div>
+    <div class="ai-feature">
+      <div class="ai-title">🏷️ AI Auto-tagging</div>
+      <div class="ai-desc">Paste a bug description → AI suggests labels: [bug, frontend, critical, needs-design]</div>
+    </div>
+  </div>
+</div>
+
+<!-- STRUCTURE -->
+<div class="panel" id="panel-structure">
+  <div class="section">
+    <div class="section-title"><i class="ti ti-folder-open" aria-hidden="true"></i> Full folder structure</div>
+    <div class="code-block folder"><span class="dir">project-root/</span>
+├── <span class="dir">client/</span>                    <span class="comment"># React + Vite</span>
+│   ├── <span class="dir">src/</span>
+│   │   ├── <span class="dir">components/</span>
+│   │   │   ├── <span class="dir">ui/</span>             <span class="comment"># Button, Modal, Badge</span>
+│   │   │   ├── <span class="dir">kanban/</span>         <span class="comment"># Board, Column, Card</span>
+│   │   │   ├── <span class="dir">ai/</span>             <span class="comment"># ChatBot, AIAssist</span>
+│   │   │   └── <span class="dir">layout/</span>         <span class="comment"># Sidebar, Navbar</span>
+│   │   ├── <span class="dir">pages/</span>
+│   │   │   ├── Dashboard.jsx
+│   │   │   ├── Board.jsx
+│   │   │   ├── Issues.jsx
+│   │   │   └── Settings.jsx
+│   │   ├── <span class="dir">context/</span>
+│   │   │   ├── AuthContext.jsx
+│   │   │   └── ProjectContext.jsx
+│   │   ├── <span class="dir">hooks/</span>
+│   │   │   ├── useAuth.js
+│   │   │   └── useSocket.js
+│   │   ├── <span class="dir">services/</span>
+│   │   │   ├── api.js              <span class="comment"># axios instance</span>
+│   │   │   └── aiService.js
+│   │   └── <span class="dir">utils/</span>
+│   └── .env
+├── <span class="dir">server/</span>                    <span class="comment"># Node + Express</span>
+│   ├── <span class="dir">controllers/</span>
+│   │   ├── authController.js
+│   │   ├── projectController.js
+│   │   ├── issueController.js
+│   │   └── aiController.js
+│   ├── <span class="dir">models/</span>
+│   │   ├── User.js
+│   │   ├── Project.js
+│   │   ├── Issue.js
+│   │   └── Comment.js
+│   ├── <span class="dir">routes/</span>
+│   ├── <span class="dir">middleware/</span>
+│   │   ├── auth.js                 <span class="comment"># JWT verify</span>
+│   │   └── errorHandler.js
+│   ├── <span class="dir">socket/</span>
+│   │   └── socketHandler.js
+│   └── server.js
+└── README.md</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-database" aria-hidden="true"></i> MongoDB schemas</div>
+    <div class="code-block">// Issue model (most important)
+{
+  title: String,
+  description: String,
+  type: { type: String, enum: ['bug','feature','task','story'] },
+  priority: { type: String, enum: ['low','medium','high','critical'] },
+  status: { type: String, enum: ['backlog','todo','in-progress','review','done'] },
+  project: { type: ObjectId, ref: 'Project' },
+  assignee: { type: ObjectId, ref: 'User' },
+  reporter: { type: ObjectId, ref: 'User' },
+  comments: [{ user: ObjectId, text: String, createdAt: Date }],
+  aiGenerated: Boolean,         // ← shows AI was used
+  labels: [String],
+  dueDate: Date,
+  createdAt: { type: Date, default: Date.now }
+}</div>
+  </div>
+</div>
+
+<!-- PROMPTS -->
+<div class="panel" id="panel-prompts">
+  <div class="section">
+    <div class="section-title"><i class="ti ti-message-chatbot" aria-hidden="true"></i> System prompt for AI assistant</div>
+    <div class="ai-prompt">You are an intelligent project management assistant integrated into a Jira-like tool.
+You help developers manage tasks, write descriptions, summarize sprints, and identify blockers.
+
+Current project context:
+- Project: {projectName}
+- Active sprint: {sprintName}  
+- Total issues: {total} ({done} done, {inProgress} in progress, {backlog} in backlog)
+- Team members: {memberNames}
+
+Rules:
+- Be concise and actionable
+- Format lists with bullet points
+- When asked to generate a task, return JSON: { title, description, priority, labels }
+- Identify blockers by looking for issues with no assignee or past due date</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-sparkles" aria-hidden="true"></i> Prompt for task description generator</div>
+    <div class="ai-prompt">Generate a professional task description for a software project.
+
+Task title: "{taskTitle}"
+Project type: Web application (MERN Stack)
+
+Return a JSON object with:
+{
+  "description": "2-3 sentence clear description of what needs to be done",
+  "acceptanceCriteria": ["criterion 1", "criterion 2", "criterion 3"],
+  "suggestedPriority": "low|medium|high|critical",
+  "suggestedLabels": ["label1", "label2"],
+  "estimatedHours": number
+}
+
+Only return valid JSON. No extra text.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><i class="ti ti-report" aria-hidden="true"></i> Prompt for sprint summary</div>
+    <div class="ai-prompt">Analyze this sprint data and write a concise summary report.
+
+Sprint: {sprintName}
+Issues: {JSON.stringify(issues)}
+
+Write a report with:
+1. Overall progress (1 sentence)
+2. Key completions (bullet list, max 3)
+3. Blockers identified (if any)
+4. Recommendation for next sprint (1 sentence)
+
+Keep it under 150 words. Be direct and professional.</div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="panel" id="panel-timeline">
+  <div class="highlight"><i class="ti ti-clock" aria-hidden="true"></i> Deadline: Sunday May 24, 11:59 PM — you have ~36 hours. Here's the plan.</div>
+  
+  <div class="timeline">
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 0–1</div>
+      <div class="tl-title">Project setup</div>
+      <div class="tl-desc">Create Vite app, Express server, MongoDB Atlas, GitHub repo, Render + Vercel accounts</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 1–4</div>
+      <div class="tl-title">Auth system</div>
+      <div class="tl-desc">JWT register/login, protected routes, role-based access (Admin, PM, Developer), AuthContext</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 4–8</div>
+      <div class="tl-title">Kanban board</div>
+      <div class="tl-desc">5 columns with @dnd-kit drag-drop, issue cards with priority badges, assignee avatars</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 8–12</div>
+      <div class="tl-title">Issue management</div>
+      <div class="tl-desc">Create/edit/delete issues, comment threads, status history, full detail modal</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 12–15</div>
+      <div class="tl-title">AI features 🤖</div>
+      <div class="tl-desc">Gemini API: task generator, AI chatbot panel, sprint summary. These are your differentiator!</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 15–18</div>
+      <div class="tl-title">Dashboard + charts</div>
+      <div class="tl-desc">Recharts donut chart, sprint progress bar, activity feed, dark mode toggle</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 18–21</div>
+      <div class="tl-title">Socket.io real-time</div>
+      <div class="tl-desc">Live board updates when team members move cards. Impressive bonus feature.</div>
+    </div>
+    <div class="tl-item"><div class="tl-dot"></div>
+      <div class="tl-time">Hour 21–24</div>
+      <div class="tl-title">Polish + deploy</div>
+      <div class="tl-desc">Deploy backend to Render, frontend to Vercel, write README with screenshots and test credentials</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

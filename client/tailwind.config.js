@@ -20,6 +20,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.2s ease-out',
@@ -28,6 +29,7 @@ export default {
         'bounce-in': 'bounceIn 0.4s cubic-bezier(0.68,-0.55,0.27,1.55)',
         'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
         'spin-slow': 'spin 3s linear infinite',
+        'marquee': 'marquee 28s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -49,6 +51,10 @@ export default {
         pulseSoft: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.6' },
+        },
+        marquee: {
+          '0%':   { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
       },
       boxShadow: {
